@@ -17,6 +17,7 @@ import (
 )
 
 const domain = "https://lms.ssu.ac.kr"
+const loginPage = "https://smartid.ssu.ac.kr/Symtra_sso/smln.asp?apiReturnUrl=https://lms.ssu.ac.kr/xn-sso/gw-cb.php"
 
 func main() {
 	err := godotenv.Load()
@@ -32,7 +33,7 @@ func main() {
 
 	tab, _ := NewTab(allocCtx)
 
-	tab.GotoURL(domain + "/login")
+	tab.GotoURL(loginPage)
 	tab.Fill("#userid", id+"\t"+pw+"\n", &Opts{WaitResponse: true})
 	tab.GotoURL(domain + "/mypage")
 	iframe := tab.GetNode("iframe")
@@ -140,7 +141,6 @@ func main() {
 
 			if currentTime == "" || totalDuration == "" {
 				continue
-
 			}
 			if convertTime(currentTime) >= convertTime(totalDuration) {
 				break
